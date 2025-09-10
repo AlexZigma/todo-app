@@ -1,0 +1,138 @@
+:root {
+  --white: #ffffff;
+  --black: #000000;
+  --primary: #ffbf69;
+  --secondary: #ff9f1c;
+
+  --border-radius: 10px;
+  --card-height: 70px
+}
+
+*,
+*::after,
+*::before {
+  box-sizing: border-box;
+}
+
+ul {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+}
+
+input {
+  margin: 0;
+}
+
+.container {
+  max-width: 500px;
+  margin-inline: auto;
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+}
+
+.header {
+  text-align: center;
+  text-transform: uppercase;
+}
+
+.new-todo {
+  display: flex;
+  height: var(--card-height);
+  /* background-color: var(--primary); */
+  border: 2px solid var(--primary);
+  border-radius: var(--border-radius);
+}
+
+.new-todo__button {
+  border: none;
+  background: none;
+  background-image: url(icons/down-arrow.svg);
+  background-repeat: no-repeat;
+  background-size: 30px;
+  background-position: center;
+  /* height: 50px; */
+  width: 40px;
+}
+
+.new-todo__input {
+  border: none;
+  background: none;
+  width: 100%;
+}
+
+.todo {}
+
+.todo__list {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+
+.card {
+  width: 100%;
+  height: var(--card-height);
+  /* background-color: var(--primary); */
+  border: 2px solid var(--primary);
+  border-radius: 10px;
+  padding: 10px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  gap: 20px;
+
+  transition: background-color 0.1s ease-in-out;
+
+  &:has(.card__checkbox:checked) {
+    background-color: var(--primary);
+  }
+}
+
+.card__checkbox {
+  appearance: none;
+  background-color: var(--white);
+  border: 2px solid var(--primary);
+  height: 30px;
+  aspect-ratio: 1;
+  border-radius: 4px;
+  transition: border-radius 0.1s ease;
+
+  &:checked {
+    background-image: url(icons/ok.svg);
+    
+  }
+}
+
+.card__text {
+  width: 100%;
+  /* color: var(--white); */
+}
+
+.card__button-remove {
+  background: none;
+  border: none;
+  background-image: url(icons/close.svg);
+  background-size: contain;
+
+  height: 20px;
+  aspect-ratio: 1;
+}
+
+.todo-footer {
+  position: relative;
+  padding: 10px;
+  background-color: aqua;
+}
+
+.todo-footer__count {
+  position: absolute;
+  inset: 0;
+  padding: 10px;
+}
+
+.filter {
+  display: flex;
+  gap: 5px;
+  justify-content: center;
+}

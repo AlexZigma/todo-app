@@ -1,0 +1,79 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Document</title>
+  <!-- <link rel="stylesheet" href="src/styles.css"> -->
+  <script type="module" src="src/main.js"></script>
+</head>
+
+<body>
+  <header class="header container">
+    <h1 class="header__title">todo</h1>
+  </header>
+
+  <main>
+    <section class="container todo-container">
+
+      <form class="card todo-new" id="todo-form" action="">
+        <input class="card__button todo-new__button" type="checkbox"></input>
+        <input class="input card__input" id="todo-new" type="text" placeholder="I need to do...">
+      </form>
+
+      <div class="todo">
+        <ul class="todo__list" id="todo-list">
+
+          <li class="todo__element">
+            <div class="card">
+              <input class="card__checkbox" type="checkbox" name="" id="" checked>
+              <span class="card__text">task 1</span>
+              <button class="card__button-remove" type="button"></button>
+            </div>
+          </li>
+
+          <li class="todo__element">
+            <div class="card">
+              <input class="card__checkbox" type="checkbox" name="" id="">
+              <span class="card__text">task 1</span>
+              <button class="card__button-remove" type="button"></button>
+            </div>
+          </li>
+
+        </ul>
+      </div>
+
+      <div class="todo__footer">
+        <ul class="filter">
+          <li class="filter__item">
+            <button class="filter__button filter__button--selected">
+              All
+            </button>
+          </li>
+          <li>
+            <button class="filter__button">
+              Active
+            </button>
+          </li>
+          <li>
+            <button class="filter__button">
+              Completed
+            </button>
+          </li>
+        </ul>
+        <span class="todo__count" id="todo-count">
+          12
+        </span>
+        <button class="todo__button-clear">Clear completed</button>
+      </div>
+
+    </section>
+  </main>
+
+  <footer>
+
+  </footer>
+</body>
+
+</html>
