@@ -1,0 +1,72 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Document</title>
+  <!-- <link rel="stylesheet" href="src/styles.css"> -->
+  <script type="module" crossorigin src="/assets/index-Qlae0b1S.js"></script>
+  <link rel="stylesheet" crossorigin href="/assets/index-BoK1yLOZ.css">
+</head>
+
+<body>
+  <header class="header container">
+    <h1 class="header__title">todo</h1>
+  </header>
+
+  <main>
+    <section class="container todo-container">
+
+      <form class="card todo-new" id="todo-form" action="">
+        <input class="card__button todo-new__button" id="completeAllButton" type="checkbox"></input>
+        <input class="input card__input" id="todo-new" type="text" placeholder="I need to do...">
+      </form>
+
+      <div class="todo">
+        <ul class="todo__list" id="todo-list">
+
+          <li class="todo__item">
+            <div class="card">
+              <input class="card__checkbox" type="checkbox" name="" id="" checked>
+              <span class="card__text">task 1</span>
+              <button class="card__button-remove" type="button"></button>
+            </div>
+          </li>
+
+        </ul>
+      </div>
+
+      <div class="todo__footer">
+        <ul class="filter-list">
+          <li class="filter-item">
+            <button class="filter-button filter-button--selected" id="filterButtonAll">
+              All
+            </button>
+          </li>
+          <li>
+            <button class="filter-button" id="filterButtonActive">
+              Active
+            </button>
+          </li>
+          <li>
+            <button class="filter-button" id="filterButtonCompleted">
+              Completed
+            </button>
+          </li>
+        </ul>
+        <span class="todo__count" id="todo-count">
+          12
+        </span>
+        <button class="todo__button-clear">Clear completed</button>
+      </div>
+
+    </section>
+  </main>
+
+  <footer>
+
+  </footer>
+</body>
+
+</html>
