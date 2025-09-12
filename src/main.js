@@ -1,3 +1,4 @@
+'use strict'
 import './scss/styles.scss'
 
 const inputTodoNewElement = document.getElementById('todo-new')
@@ -119,7 +120,7 @@ filterButtonCompleted.addEventListener('click', (event) => {
   Todo.render()
 })
 
-Todo.render('all')
+Todo.render()
 
 
 function Task(text, isActive) {
