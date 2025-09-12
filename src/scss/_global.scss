@@ -62,14 +62,28 @@ body {
   font-size: 20px;
   // font-size: fluid-value(16, 20, 360, 1024);
   line-height: 28px;
-
 }
 
 .container {
-  max-width: 600px;
+  max-width: 800px;
   margin-inline: auto;
   // padding-inline: 20px;
   margin-block: 50px;
+  backdrop-filter: blur(10px);
+  background-color: rgba(255, 255, 255, 0.3);
+}
+
+.background {
+  position: fixed;
+  inset: 0;
+  z-index: -100;
+  height: 100%;
+  width: 100%;
+  object-fit: cover;
+}
+
+.hidden {
+  display: none !important;
 }
 
 

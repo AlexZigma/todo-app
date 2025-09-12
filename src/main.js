@@ -5,10 +5,8 @@ const inputTodoNewElement = document.getElementById('todo-new')
 const todoFormElement = document.getElementById('todo-form')
 const todoListElement = document.getElementById('todo-list')
 const todoCountElement = document.getElementById('todo-count')
-const clearCompletedElement = document.querySelector('.todo__button-clear')
-const filterButtonAll = document.getElementById('filterButtonAll')
-const filterButtonActive = document.getElementById('filterButtonActive')
-const filterButtonCompleted = document.getElementById('filterButtonCompleted')
+const clearCompletedButton = document.querySelector('.todo__button-clear')
+const filterListElement = document.querySelector('.filter-list')
 const completeAllButton = document.getElementById('completeAllButton')
 
 const Todo = {
@@ -31,33 +29,23 @@ const Todo = {
     todoList.forEach((task) => {
       const li = document.createElement('li')
       li.classList.add('todo__element')
-      // li.id = todo.id
-      li.innerHTML =
-        // <li class="todo__element id=${todo.id}">
-        `
+      li.dataset.id = task.id
+      li.innerHTML = `
         <div class="card">
           <input class="card__checkbox" type="checkbox" name="" id=""
-          ${task.isChecked ? 'checked' : ''}>
+          ${task.isCompleted ? 'checked' : ''}>
           <span class="card__text">${task.text}</span>
           <button class="card__button-remove" type="button""></button>
         </div>
         `
-      // </li>
-      const buttonDeleteElement = li.querySelector('.card__button-remove')
-      const buttonIsCompletedElement = li.querySelector('.card__checkbox')
-
-
-      buttonDeleteElement.addEventListener('click', (e) => this.deleteTask(task.id))
-
-      buttonIsCompletedElement.checked = task.isCompleted
-      buttonIsCompletedElement.addEventListener('change', (e) => {
-        this.todoList.find(e => e.id === task.id).isCompleted = buttonIsCompletedElement.checked
-        // task.isCompleted = !task.isCompleted
-      })
       todoListElement.appendChild(li)
     })
-
-    todoCountElement.textContent = this.todoList.length
+    this.updateCount()
+    this.updateClearButton()
+  },
+  setTaskCompleted(id, isCompleted) {
+    this.todoList.find(e => e.id === id).isCompleted = isCompleted
+    this.render()
   },
   deleteTask(id) {
     // id = this.parentElement.parentElement.id
@@ -83,6 +71,18 @@ const Todo = {
       task.isCompleted = !isAllCompleted
     })
     this.render()
+  },
+  setFilter(filter) {
+    this.filter = filter
+    this.render()
+  },
+  updateClearButton() {
+    const isAnyCompleted = Todo.todoList.some(task => task.isCompleted)
+    clearCompletedButton.classList.toggle('hidden', !isAnyCompleted)
+  },
+  updateCount() {
+    const count = this.todoList.filter(task => !task.isCompleted).length
+    todoCountElement.textContent = `${count} item${count === 1 ? '' : 's'} left`
   }
 }
 
@@ -91,39 +91,56 @@ todoFormElement.addEventListener('submit', (e) => {
   Todo.addTask()
 })
 
-clearCompletedElement.addEventListener('click', (event) => {
-  Todo.clearCompleted()
+todoListElement.addEventListener('click', (event) => {
+  const li = event.target.closest('.todo__element')
+  if (!li) {
+    return
+  }
+
+  const id = li.dataset.id
+  if (event.target.matches('.card__button-remove')) {
+    Todo.deleteTask(id)
+  }
 })
 
-const filterButtons = document.querySelectorAll('.filter-button');
-for (let button of filterButtons) {
-  button.addEventListener('click', () => {
-    filterButtons.forEach(btn => btn.classList.remove('filter-button--selected'));
-    button.classList.add('filter-button--selected');
-  })
-}
+todoListElement.addEventListener('change', (event) => {
+  const li = event.target.closest('.todo__element')
+  if (!li) {
+    return
+  }
+
+  const id = li.dataset.id
+  if (event.target.matches('.card__checkbox')) {
+    Todo.setTaskCompleted(id, event.target.checked)
+  }
+
+})
+
+clearCompletedButton.addEventListener('click', (event) => {
+  Todo.clearCompleted()
+})
 
 completeAllButton.addEventListener('click', (event) => {
   Todo.completeAll()
 })
 
-filterButtonAll.addEventListener('click', (event) => {
-  Todo.filter = 'all'
-  Todo.render()
-})
-filterButtonActive.addEventListener('click', (event) => {
-  Todo.filter = 'active'
-  Todo.render()
-})
-filterButtonCompleted.addEventListener('click', (event) => {
-  Todo.filter = 'completed'
-  Todo.render()
+filterListElement.addEventListener('click', (event) => {
+  const filterButton = event.target.closest('.filter-button')
+  if (!filterButton) return
+
+  const filterButtons = event.currentTarget.querySelectorAll('.filter-button');
+  for (let button of filterButtons) {
+    button.classList.remove('filter-button--selected');
+  }
+  filterButton.classList.add('filter-button--selected');
+
+  const filter = filterButton.dataset.filter
+  Todo.setFilter(filter)
 })
 
 Todo.render()
 
-
-function Task(text, isActive) {
+function Task(text) {
   this.id = crypto.randomUUID()
   this.text = text
   this.isCompleted = false

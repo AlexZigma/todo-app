@@ -29,7 +29,7 @@
       background-image: url(/public/icons/ic-dropdown.svg);
       background-position: center;
       background-repeat: no-repeat;
-      width: 20px;
+      width: 100%;
       aspect-ratio: 1;
       background-size: contain;
     }
@@ -37,6 +37,7 @@
 }
 
 .todo__footer {
+  height: 50px;
   padding: 5px 15px;
   display: flex;
   justify-content: space-between;
