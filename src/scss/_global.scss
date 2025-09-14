@@ -98,3 +98,11 @@ span {
   opacity: 0;
 }
 
+.fade-out {
+  opacity: 0;
+  height: 0 !important;
+  padding: 0 15px;
+  margin: 0;
+  overflow: hidden;
+  transition-duration: 300ms;
+}

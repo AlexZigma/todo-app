@@ -44,7 +44,7 @@
     align-items: center;
     flex-wrap: wrap;
     position: relative;
-    gap: 10px;
+    gap: 5px;
     
     @include mobile {
       height: 100px;
@@ -62,7 +62,7 @@
 
   &__count {
     position: relative;
-    // align-self: flex-start;
+    align-self: flex-start;
   }
 
   &__clear-button {

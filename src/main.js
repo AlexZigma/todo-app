@@ -14,7 +14,7 @@ class Task {
 }
 
 class Todo {
-  localStorageKey = 'todo-storage'
+  storageKey = 'todo-storage'
   constructor() {
     this.inputTodoNewElement = document.getElementById('todo-new')
     this.todoFormElement = document.getElementById('todo-form')
@@ -25,8 +25,8 @@ class Todo {
     this.completeAllButton = document.getElementById('completeAllButton')
 
     this.filter = 'all'
-    // this.todoList = this.loadTodo()
-    this.todoList = [new Task('1'), new Task('2')]
+    this.todoList = this.loadTodo()
+    // this.todoList = [new Task('1'), new Task('2')]
 
     this.bindEvents()
     this.render()
@@ -58,26 +58,44 @@ class Todo {
   }
 
   loadTodo() {
-
+    const rawData = localStorage.getItem(this.storageKey)
+    if (rawData) {
+      return JSON.parse(rawData)
+    }
+    return []
   }
 
   saveTodo() {
-
+    localStorage.setItem(this.storageKey, JSON.stringify(this.todoList))
   }
 
   addTask(text) {
     const newTask = new Task(text)
     this.todoList.push(newTask)
+    this.saveTodo()
     this.render()
+  }
+
+  editTask(id, text) {
+    const task = this.getTask(id)
+    task.text = text
+    this.saveTodo()
+    this.render()
+  }
+
+  getTask(id) {
+    return this.todoList.find(task => task.id === id)
   }
 
   deleteTask(id) {
     this.todoList = this.todoList.filter(task => task.id !== id)
+    this.saveTodo()
     this.render()
   }
 
   setTaskCompleted(id, isCompleted) {
     this.todoList.find(e => e.id === id).isCompleted = isCompleted
+    this.saveTodo()
     this.render()
   }
 
@@ -86,10 +104,14 @@ class Todo {
     this.todoList.forEach(task => {
       task.isCompleted = !isAllCompleted
     })
+    this.saveTodo()
+    this.render()
   }
 
   clearCompleted() {
     this.todoList = this.todoList.filter(task => !task.isCompleted)
+    this.saveTodo()
+    this.render()
   }
 
   setFilter(filter) {
@@ -149,21 +171,43 @@ class Todo {
   }
 
   onEditTask = (event) => {
-    if (event.target.matches('.todo__item')) {
-      const li = event.target.closest('.todo__item')
+    const li = event.target.closest('.todo__item')
+    if (li) {
+      const input = document.createElement('input')
+      input.classList.add('todo-item__input')
       const id = li.dataset.id
+      const task = this.getTask(id)
 
+      li.classList.add('todo-item--editing')
+      li.appendChild(input)
+
+      input.value = task.text
+      input.focus()
+      input.addEventListener('change', (event) => {
+        task.text = input.value
+        this.render()
+      })
+
+      input.addEventListener('keydown', (event) => {
+        if (event.key === 'Enter') {
+          task.text = input.value
+          input.blur()
+        }
+      })
+
+      input.addEventListener('blur', (event) => {
+        li.classList.remove('todo-item--editing')
+        input.remove()
+      })
     }
   }
 
   onClearCompleted = (event) => {
     this.clearCompleted()
-    this.render()
   }
 
   onCompleteAllButtonClick = (event) => {
     this.completeAll()
-    this.render()
   }
 
   onFilterClick = (event) => {
