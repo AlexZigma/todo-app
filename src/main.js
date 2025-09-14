@@ -1,19 +1,103 @@
 'use strict'
 import './scss/styles.scss'
 
-const inputTodoNewElement = document.getElementById('todo-new')
-const todoFormElement = document.getElementById('todo-form')
-const todoListElement = document.getElementById('todo-list')
-const todoCountElement = document.getElementById('todo-count')
-const clearCompletedButton = document.querySelector('.todo__button-clear')
-const filterListElement = document.querySelector('.filter-list')
-const completeAllButton = document.getElementById('completeAllButton')
+class Task {
+  constructor(text, isCompleted = false) {
+    this.id = crypto.randomUUID()
+    this.text = text
+    this.isCompleted = isCompleted
+  }
 
-const Todo = {
-  todoList: [new Task('1'), new Task('2')],
-  filter: 'all',
+  setIsCompleted(isCompleted) {
+    this.isCompleted = isCompleted
+  }
+}
+
+class Todo {
+  localStorageKey = 'todo-storage'
+  constructor() {
+    this.inputTodoNewElement = document.getElementById('todo-new')
+    this.todoFormElement = document.getElementById('todo-form')
+    this.todoListElement = document.getElementById('todo-list')
+    this.todoCountElement = document.getElementById('todo-count')
+    this.clearCompletedButton = document.querySelector('.todo__clear-button')
+    this.filterListElement = document.querySelector('.filter')
+    this.completeAllButton = document.getElementById('completeAllButton')
+
+    this.filter = 'all'
+    // this.todoList = this.loadTodo()
+    this.todoList = [new Task('1'), new Task('2')]
+
+    this.bindEvents()
+    this.render()
+  }
+
   render() {
-    todoListElement.innerHTML = ''
+    const todoList = this.filterItems()
+
+    let inner = ''
+    todoList.slice().reverse().forEach((task) => {
+      inner += this.template(task)
+    })
+    this.todoListElement.innerHTML = inner
+
+    this.updateCount()
+    this.updateClearButton()
+  }
+
+  template(task) {
+    return (
+      `<li class="todo__item todo-item card" data-id=${task.id}>
+        <input class="todo-item__checkbox" 
+          type="checkbox" 
+          ${task.isCompleted ? 'checked' : ''}>
+        <span class="todo-item__text">${task.text}</span>
+        <button class="todo-item__delete-button" type="button"></button>
+      </li>`
+    )
+  }
+
+  loadTodo() {
+
+  }
+
+  saveTodo() {
+
+  }
+
+  addTask(text) {
+    const newTask = new Task(text)
+    this.todoList.push(newTask)
+    this.render()
+  }
+
+  deleteTask(id) {
+    this.todoList = this.todoList.filter(task => task.id !== id)
+    this.render()
+  }
+
+  setTaskCompleted(id, isCompleted) {
+    this.todoList.find(e => e.id === id).isCompleted = isCompleted
+    this.render()
+  }
+
+  completeAll() {
+    const isAllCompleted = this.todoList.every(task => task.isCompleted)
+    this.todoList.forEach(task => {
+      task.isCompleted = !isAllCompleted
+    })
+  }
+
+  clearCompleted() {
+    this.todoList = this.todoList.filter(task => !task.isCompleted)
+  }
+
+  setFilter(filter) {
+    this.filter = filter
+    this.render()
+  }
+
+  filterItems() {
     let todoList = this.todoList
     switch (this.filter) {
       case 'all':
@@ -25,123 +109,89 @@ const Todo = {
         todoList = todoList.filter(task => !task.isCompleted)
         break
     }
+    return todoList
+  }
 
-    todoList.forEach((task) => {
-      const li = document.createElement('li')
-      li.classList.add('todo__element')
-      li.dataset.id = task.id
-      li.innerHTML = `
-        <div class="card">
-          <input class="card__checkbox" type="checkbox" name="" id=""
-          ${task.isCompleted ? 'checked' : ''}>
-          <span class="card__text">${task.text}</span>
-          <button class="card__button-remove" type="button""></button>
-        </div>
-        `
-      todoListElement.appendChild(li)
-    })
-    this.updateCount()
-    this.updateClearButton()
-  },
-  setTaskCompleted(id, isCompleted) {
-    this.todoList.find(e => e.id === id).isCompleted = isCompleted
-    this.render()
-  },
-  deleteTask(id) {
-    // id = this.parentElement.parentElement.id
-    // alert(id)
-    this.todoList = this.todoList.filter(task => task.id !== id)
-    this.render()
-  },
-  addTask() {
-    if (inputTodoNewElement.value) {
-      const newTask = new Task(inputTodoNewElement.value)
-      this.todoList.push(newTask)
-      inputTodoNewElement.value = '';
-      this.render()
-    }
-  },
-  clearCompleted() {
-    this.todoList = this.todoList.filter(task => !task.isCompleted)
-    this.render()
-  },
-  completeAll() {
-    const isAllCompleted = this.todoList.every(task => task.isCompleted)
-    this.todoList.map(task => {
-      task.isCompleted = !isAllCompleted
-    })
-    this.render()
-  },
-  setFilter(filter) {
-    this.filter = filter
-    this.render()
-  },
   updateClearButton() {
-    const isAnyCompleted = Todo.todoList.some(task => task.isCompleted)
-    clearCompletedButton.classList.toggle('hidden', !isAnyCompleted)
-  },
+    const isAnyCompleted = this.todoList.some(task => task.isCompleted)
+    this.clearCompletedButton.classList.toggle('hidden', !isAnyCompleted)
+  }
+
   updateCount() {
     const count = this.todoList.filter(task => !task.isCompleted).length
-    todoCountElement.textContent = `${count} item${count === 1 ? '' : 's'} left`
+    this.todoCountElement.textContent = `${count} item${count === 1 ? '' : 's'} left`
+  }
+
+  onAddNewTask = (event) => {
+    event.preventDefault()
+    const inputValue = this.inputTodoNewElement.value
+
+    if (inputValue.trim().length > 0) {
+      this.addTask(inputValue)
+      this.inputTodoNewElement.value = ''
+    }
+  }
+
+  onDeleteTask = (event) => {
+    if (event.target.matches('.todo-item__delete-button')) {
+      const li = event.target.closest('.todo__item')
+      const id = li.dataset.id
+      this.deleteTask(id)
+    }
+  }
+
+  onChangeTask = (event) => {
+    if (event.target.matches('.todo-item__checkbox')) {
+      const li = event.target.closest('.todo__item')
+      const id = li.dataset.id
+      this.setTaskCompleted(id, event.target.checked)
+    }
+  }
+
+  onEditTask = (event) => {
+    if (event.target.matches('.todo__item')) {
+      const li = event.target.closest('.todo__item')
+      const id = li.dataset.id
+
+    }
+  }
+
+  onClearCompleted = (event) => {
+    this.clearCompleted()
+    this.render()
+  }
+
+  onCompleteAllButtonClick = (event) => {
+    this.completeAll()
+    this.render()
+  }
+
+  onFilterClick = (event) => {
+    const filterButton = event.target.closest('.filter__button')
+    if (!filterButton) return
+
+    const filterButtons = event.currentTarget.querySelectorAll('.filter__button');
+    for (let button of filterButtons) {
+      button.classList.remove('filter__button--selected');
+    }
+    filterButton.classList.add('filter__button--selected');
+
+    const filter = filterButton.dataset.filter
+    this.setFilter(filter)
+
+  }
+
+  bindEvents() {
+    this.todoFormElement.addEventListener('submit', this.onAddNewTask)
+    this.todoListElement.addEventListener('click', this.onDeleteTask)
+    this.todoListElement.addEventListener('change', this.onChangeTask)
+    this.todoListElement.addEventListener('dblclick', this.onEditTask)
+    this.clearCompletedButton.addEventListener('click', this.onClearCompleted)
+    this.completeAllButton.addEventListener('click', this.onCompleteAllButtonClick)
+    this.filterListElement.addEventListener('click', this.onFilterClick)
   }
 }
 
-todoFormElement.addEventListener('submit', (e) => {
-  e.preventDefault()
-  Todo.addTask()
-})
+new Todo()
 
-todoListElement.addEventListener('click', (event) => {
-  const li = event.target.closest('.todo__element')
-  if (!li) {
-    return
-  }
 
-  const id = li.dataset.id
-  if (event.target.matches('.card__button-remove')) {
-    Todo.deleteTask(id)
-  }
-})
-
-todoListElement.addEventListener('change', (event) => {
-  const li = event.target.closest('.todo__element')
-  if (!li) {
-    return
-  }
-
-  const id = li.dataset.id
-  if (event.target.matches('.card__checkbox')) {
-    Todo.setTaskCompleted(id, event.target.checked)
-  }
-
-})
-
-clearCompletedButton.addEventListener('click', (event) => {
-  Todo.clearCompleted()
-})
-
-completeAllButton.addEventListener('click', (event) => {
-  Todo.completeAll()
-})
-
-filterListElement.addEventListener('click', (event) => {
-  const filterButton = event.target.closest('.filter-button')
-  if (!filterButton) return
-
-  const filterButtons = event.currentTarget.querySelectorAll('.filter-button');
-  for (let button of filterButtons) {
-    button.classList.remove('filter-button--selected');
-  }
-  filterButton.classList.add('filter-button--selected');
-
-  const filter = filterButton.dataset.filter
-  Todo.setFilter(filter)
-})
-
-Todo.render()
-
-function Task(text) {
-  this.id = crypto.randomUUID()
-  this.text = text
-  this.isCompleted = false
-}

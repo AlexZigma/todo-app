@@ -1,0 +1,101 @@
+.todo-item {
+
+  &__checkbox {
+    // height: 50px;
+    appearance: none;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin: 5px;
+    width: 35px;
+    aspect-ratio: 1;
+    border: 2px solid var(--black);
+    border-radius: 50%;
+
+    &:after {
+      content: '';
+      inset: 0;
+      background-image: url(/public/icons/check-mark.svg);
+      background-position: center;
+      background-repeat: no-repeat;
+      width: 50%;
+      aspect-ratio: 1;
+      background-size: contain;
+      opacity: 0;
+    }
+
+    &:hover {
+      border-color: var(--green-100);
+      background-color: var(--green-100);
+
+      &::after {
+        opacity: 1;
+        filter: brightness(0) saturate(100%) invert(98%) sepia(63%) saturate(70%) hue-rotate(274deg) brightness(119%) contrast(100%);
+        border-color: var(--green-300);
+      }
+    }
+
+    &:checked {
+      border-color: var(--green-400);
+      background-color: var(--green-400);
+
+      &::after {
+        opacity: 1;
+        filter: brightness(0) saturate(100%) invert(98%) sepia(63%) saturate(70%) hue-rotate(274deg) brightness(119%) contrast(100%);
+      }
+    }
+  }
+
+  &__text {
+    // width: 100%;
+    flex: 1;
+    padding-left: 10px;
+  }
+
+  &__delete-button {
+    border: none;
+    background: none;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 5px;
+    width: 40px;
+    aspect-ratio: 1;
+    opacity: 0;
+
+    &::after {
+      content: '';
+      inset: 0;
+      background-image: url(/public/icons/close.svg);
+      background-position: center;
+      background-repeat: no-repeat;
+      width: 100%;
+      aspect-ratio: 1;
+      background-size: contain;
+      transition-duration: inherit;
+    }
+
+    &:hover::after {
+      filter: brightness(0) saturate(100%) invert(0%) sepia(0%) saturate(7474%) hue-rotate(188deg) brightness(92%) contrast(106%);
+    }
+  }
+
+  &:hover {
+    border: 1px solid var(--orange-100);
+
+    & .todo-item__delete-button {
+      opacity: 1;
+    }
+  }
+
+  &:has(.todo-item__checkbox:checked) {
+    border-color: var(--green-300);
+    box-shadow: 0px 0px 3px 1px var(--green-300) inset;
+
+    &>.todo-item__text {
+      text-decoration: line-through;
+      color: var(--gray-300);
+      transition-duration: 300ms;
+    }
+  }
+}

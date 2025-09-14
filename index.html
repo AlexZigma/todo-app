@@ -5,73 +5,61 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Document</title>
-  <!-- <link rel="stylesheet" href="src/styles.css"> -->
   <script type="module" src="./src/main.js"></script>
 </head>
 
 <body>
-
-  <!-- <img class="background" src="public/images/bg.png" alt=""> -->
 
   <header class="header container">
     <h1 class="header__title">todo</h1>
   </header>
 
   <main>
-    <section class="container todo-container">
+    <section class="container todo">
 
-      <form class="card todo-new" id="todo-form" action="">
-        <input class="card__button todo-new__button" id="completeAllButton" type="checkbox"></input>
-        <input class="input card__input" id="todo-new" type="text" placeholder="I need to do...">
+      <form class="card todo__form" id="todo-form" action="">
+        <input class="todo__complete-all" id="completeAllButton" type="checkbox"></input>
+        <input class="todo__new-input" id="todo-new" type="text" placeholder="I need to do...">
       </form>
 
-      <div class="todo__footer">
-
-        <ul class="filter-list">
-          <li class="filter-item">
-            <button class="filter-button filter-button--selected" data-filter="all">
+      <div class="card todo__actions">
+        <ul class="filter">
+          <li class="filter__item">
+            <button class="filter__button filter__button--selected" data-filter="all">
               All
             </button>
           </li>
-          <li>
-            <button class="filter-button" data-filter="active">
+          <li class="filter__item">
+            <button class="filter__button" data-filter="active">
               Active
             </button>
           </li>
-          <li>
-            <button class="filter-button" data-filter="completed">
+          <li class="filter__item">
+            <button class="filter__button" data-filter="completed">
               Completed
             </button>
           </li>
         </ul>
 
-        <span class="todo__count" id="todo-count">
-          12
-        </span>
+        <span class="todo__count" id="todo-count">0</span>
 
-        <button class="todo__button-clear hidden">Clear completed</button>
+        <button class="todo__clear-button ">Clear completed</button>
 
       </div>
 
-      <div class="todo">
-        <ul class="todo__list" id="todo-list">
-
-          <li class="todo__item">
-            <div class="card">
-              <input class="card__checkbox" type="checkbox" name="" id="" checked>
-              <span class="card__text">task 1</span>
-              <button class="card__button-remove" type="button"></button>
-            </div>
-          </li>
-
-        </ul>
-      </div>
+      <ul class="todo__list" id="todo-list">
+        <li class="todo__item todo-item card">
+          <input class="todo-item__checkbox" type="checkbox" checked>
+          <span class="todo-item__text">task 1</span>
+          <button class="todo-item__button-remove" type="button"></button>
+        </li>
+      </ul>
 
     </section>
   </main>
 
   <footer>
-
+    <span>made with love</span>
   </footer>
 </body>
 

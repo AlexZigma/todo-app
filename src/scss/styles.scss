@@ -1,6 +1,9 @@
 @use 'reset';
 @use 'global';
+@use 'mixins';
 
+@use 'header';
 @use 'card';
 @use 'todo';
+@use 'todo-item';
 @use 'filter';

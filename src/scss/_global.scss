@@ -64,6 +64,17 @@ body {
   line-height: 28px;
 }
 
+button,
+input,
+input::after {
+  transition-duration: 300ms;
+  cursor: pointer;
+}
+
+span {
+  word-break: break-all;
+}
+
 .container {
   max-width: 800px;
   margin-inline: auto;
@@ -84,12 +95,6 @@ body {
 
 .hidden {
   display: none !important;
+  opacity: 0;
 }
 
-
-button,
-input,
-input::after {
-  transition-duration: 300ms;
-  cursor: pointer;
-}
