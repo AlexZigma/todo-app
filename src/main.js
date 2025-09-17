@@ -7,10 +7,6 @@ class Task {
     this.text = text
     this.isCompleted = isCompleted
   }
-
-  setIsCompleted(isCompleted) {
-    this.isCompleted = isCompleted
-  }
 }
 
 class Todo {
@@ -60,7 +56,7 @@ class Todo {
   loadTodo() {
     const rawData = localStorage.getItem(this.storageKey)
     if (rawData) {
-      return JSON.parse(rawData)
+      return JSON.parse(rawData).map(item => new Task(item.text, item.isCompleted))
     }
     return []
   }
