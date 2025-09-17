@@ -8,11 +8,9 @@
   gap: 20px;
   position: absolute;
   inset: 0;
-  // z-index: -10;
   
   @include mobile {
     align-self: flex-end;
-    // align-items: flex-end;
     position: relative;
     flex-basis: 100%;
     order: 3;

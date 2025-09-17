@@ -1,7 +1,6 @@
 .todo-item {
 
   &__checkbox {
-    // height: 50px;
     appearance: none;
     display: flex;
     align-items: center;
@@ -47,7 +46,6 @@
   }
 
   &__text {
-    // width: 100%;
     flex: 1;
     padding-left: 10px;
   }
@@ -93,9 +91,10 @@
   }
 
   &--editing {
+
     & .todo-item__checkbox,
-      .todo-item__text,
-      .todo-item__delete-button{
+    .todo-item__text,
+    .todo-item__delete-button {
       display: none;
     }
 

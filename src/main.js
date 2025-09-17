@@ -32,8 +32,8 @@ class Todo {
     const todoList = this.filterItems()
 
     let inner = ''
-    todoList.slice().reverse().forEach((task) => {
-      inner += this.template(task)
+    todoList.forEach((task) => {
+      inner += this.getTemplate(task)
     })
     this.todoListElement.innerHTML = inner
 
@@ -41,7 +41,7 @@ class Todo {
     this.updateClearButton()
   }
 
-  template(task) {
+  getTemplate(task) {
     return (
       `<li class="todo__item todo-item card" data-id=${task.id}>
         <input class="todo-item__checkbox" 
@@ -67,7 +67,7 @@ class Todo {
 
   addTask(text) {
     const newTask = new Task(text)
-    this.todoList.push(newTask)
+    this.todoList.unshift(newTask)
     this.saveTodo()
     this.render()
   }
@@ -180,13 +180,16 @@ class Todo {
       input.value = task.text
       input.focus()
       input.addEventListener('change', (event) => {
-        task.text = input.value
+        if (input.value.trim().length === 0) {
+          this.deleteTask(id)
+        } else {
+          task.text = input.value
+        }
         this.render()
       })
 
       input.addEventListener('keydown', (event) => {
         if (event.key === 'Enter') {
-          task.text = input.value
           input.blur()
         }
       })

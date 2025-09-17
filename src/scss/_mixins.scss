@@ -5,7 +5,7 @@
 }
 
 @mixin mobile {
-  @media (max-width: 910px) {
+  @media (max-width: 700px) {
     @content;
   }
 }
