@@ -150,7 +150,7 @@ class Todo {
     }
   }
 
-  onDeleteTask = (event) => {
+  onTodoClick = (event) => {
     if (event.target.matches('.todo-item__delete-button')) {
       const li = event.target.closest('.todo__item')
       const id = li.dataset.id
@@ -166,8 +166,11 @@ class Todo {
     }
   }
 
-  onEditTask = (event) => {
+  onTodoDblClick = (event) => {
     const li = event.target.closest('.todo__item')
+    if (li.querySelector('.todo-item__input')) {
+      return
+    }
     if (li) {
       const input = document.createElement('input')
       input.classList.add('todo-item__input')
@@ -205,7 +208,7 @@ class Todo {
     this.clearCompleted()
   }
 
-  onCompleteAllButtonClick = (event) => {
+  onCompleteAll = (event) => {
     this.completeAll()
   }
 
@@ -226,11 +229,11 @@ class Todo {
 
   bindEvents() {
     this.todoFormElement.addEventListener('submit', this.onAddNewTask)
-    this.todoListElement.addEventListener('click', this.onDeleteTask)
+    this.todoListElement.addEventListener('click', this.onTodoClick)
     this.todoListElement.addEventListener('change', this.onChangeTask)
-    this.todoListElement.addEventListener('dblclick', this.onEditTask)
+    this.todoListElement.addEventListener('dblclick', this.onTodoDblClick)
     this.clearCompletedButton.addEventListener('click', this.onClearCompleted)
-    this.completeAllButton.addEventListener('click', this.onCompleteAllButtonClick)
+    this.completeAllButton.addEventListener('click', this.onCompleteAll)
     this.filterListElement.addEventListener('click', this.onFilterClick)
   }
 }
