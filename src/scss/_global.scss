@@ -73,6 +73,10 @@ input::after {
   cursor: pointer;
 }
 
+input {
+  font: inherit
+}
+
 span {
   word-break: break-all;
 }
@@ -100,8 +104,8 @@ span {
 }
 
 .hidden {
-  display: none !important;
   opacity: 0;
+  pointer-events: none;
 }
 
 .fade-out {

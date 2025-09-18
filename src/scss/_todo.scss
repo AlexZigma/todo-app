@@ -2,10 +2,15 @@
 
 .todo {
 
+  &:not(:has(.todo-item__checkbox:not(:checked))) .todo__complete-all {
+    opacity: 1;
+  }
+
   &__form {
     &:has(.todo__new-input:hover) {
       box-shadow: 0px 5px 10px 2px var(--orange-100);
-    } 
+    }
+
     &:has(.todo__new-input:focus) {
       box-shadow: 0px 5px 10px 2px var(--orange-100);
       border-color: var(--orange-200);
@@ -13,8 +18,9 @@
   }
 
   &__new-input {
+    background: none;
     height: 100%;
-    padding-left: 10px;
+    padding: 20px 10px;
     flex: 1;
   }
 
@@ -26,6 +32,11 @@
     justify-content: center;
     padding: 5px;
     width: 45px;
+    opacity: 0.5;
+
+    &:hover {
+      opacity: 1;
+    }
 
     &::before {
       content: '';
@@ -47,9 +58,9 @@
     flex-wrap: wrap;
     position: relative;
     gap: 5px;
-    
+
     @include mobile {
-      min-height: 100px;
+      // min-height: 100px;
     }
   }
 

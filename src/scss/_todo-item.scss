@@ -48,6 +48,7 @@
   &__text {
     flex: 1;
     padding-left: 10px;
+    padding-block: 20px;
   }
 
   &__delete-button {
@@ -57,9 +58,11 @@
     align-items: center;
     justify-content: center;
     padding: 5px;
-    width: 40px;
+    width: 50px;
     aspect-ratio: 1;
     opacity: 0;
+    visibility: hidden;
+    pointer-events: visible;
 
     &::after {
       content: '';
@@ -79,15 +82,13 @@
   }
 
   &__input {
-    position: absolute;
-    inset: 0;
     box-shadow: 0px 5px 10px 2px var(--orange-100);
     border: 2px solid var(--orange-200);
     border-radius: 10px;
     margin-left: 45px;
     flex: 1;
-    padding-inline: 10px;
     height: 100%;
+    padding: 20px 10px;
   }
 
   &--editing {
@@ -105,6 +106,7 @@
 
     & .todo-item__delete-button {
       opacity: 1;
+      visibility: visible;
     }
   }
 

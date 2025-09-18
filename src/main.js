@@ -22,7 +22,6 @@ class Todo {
 
     this.filter = 'all'
     this.todoList = this.loadTodo()
-    // this.todoList = [new Task('1'), new Task('2')]
 
     this.bindEvents()
     this.render()
@@ -32,6 +31,8 @@ class Todo {
     const todoList = this.filterItems()
 
     let inner = document.createDocumentFragment()
+
+    this.todoListElement.innerHTML = ''
     todoList.forEach((task) => {
       inner.appendChild(this.getTemplate(task))
     })
@@ -72,10 +73,7 @@ class Todo {
     const newTask = new Task(text)
     this.todoList.unshift(newTask)
     this.saveTodo()
-
-    const fragment = this.getTemplate(newTask)
-    this.todoListElement.prepend(fragment)
-    // this.render()
+    this.render()
   }
 
   editTask(id, text) {
@@ -98,6 +96,13 @@ class Todo {
   setTaskCompleted(id, isCompleted) {
     this.todoList.find(e => e.id === id).isCompleted = isCompleted
     this.saveTodo()
+
+    if (this.filter === 'all'){
+      this.updateCount()
+      this.updateClearButton()
+      return
+    }
+
     this.render()
   }
 
@@ -189,6 +194,7 @@ class Todo {
 
       input.value = task.text
       input.focus()
+
       input.addEventListener('change', (event) => {
         if (input.value.trim().length === 0) {
           this.deleteTask(id)
@@ -199,14 +205,13 @@ class Todo {
       })
 
       input.addEventListener('keydown', (event) => {
-        if (event.key === 'Enter') {
+        if (['Enter'].includes(event.key)) {
           input.blur()
         }
-      })
-
-      input.addEventListener('blur', (event) => {
-        li.classList.remove('todo-item--editing')
-        input.remove()
+        if (['Escape'].includes(event.key)) {
+          input.value = task.text
+          input.blur()
+        }
       })
     }
   }
