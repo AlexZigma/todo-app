@@ -31,26 +31,29 @@ class Todo {
   render() {
     const todoList = this.filterItems()
 
-    let inner = ''
+    let inner = document.createDocumentFragment()
     todoList.forEach((task) => {
-      inner += this.getTemplate(task)
+      inner.appendChild(this.getTemplate(task))
     })
-    this.todoListElement.innerHTML = inner
+    this.todoListElement.appendChild(inner)
 
     this.updateCount()
     this.updateClearButton()
   }
 
   getTemplate(task) {
-    return (
-      `<li class="todo__item todo-item card" data-id=${task.id}>
-        <input class="todo-item__checkbox" 
-          type="checkbox" 
-          ${task.isCompleted ? 'checked' : ''}>
-        <span class="todo-item__text">${task.text}</span>
-        <button class="todo-item__delete-button" type="button"></button>
-      </li>`
-    )
+    const li = document.createElement('li')
+    li.classList.add('todo__item', 'todo-item', 'card')
+    li.dataset.id = task.id
+    const template = `
+      <input class="todo-item__checkbox" 
+      type="checkbox" 
+      ${task.isCompleted ? 'checked' : ''}>
+      <span class="todo-item__text">${task.text}</span>
+      <button class="todo-item__delete-button" type="button"></button>
+      `
+    li.innerHTML = template
+    return (li)
   }
 
   loadTodo() {
@@ -69,7 +72,10 @@ class Todo {
     const newTask = new Task(text)
     this.todoList.unshift(newTask)
     this.saveTodo()
-    this.render()
+
+    const fragment = this.getTemplate(newTask)
+    this.todoListElement.prepend(fragment)
+    // this.render()
   }
 
   editTask(id, text) {
@@ -168,7 +174,8 @@ class Todo {
 
   onTodoDblClick = (event) => {
     const li = event.target.closest('.todo__item')
-    if (li.querySelector('.todo-item__input')) {
+    if (li.querySelector('.todo-item__input') ||
+      event.target.matches('.todo-item__checkbox')) {
       return
     }
     if (li) {
