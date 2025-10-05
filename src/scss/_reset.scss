@@ -1,4 +1,6 @@
-*, *::before, *::after {
+*,
+*::before,
+*::after {
   box-sizing: border-box;
 }
 
@@ -7,7 +9,10 @@
   padding: 0;
 }
 
-input, button, textarea, select {
+input,
+button,
+textarea,
+select {
   font: inherit;
 }
 
@@ -17,7 +22,11 @@ input {
   min-width: 0;
 }
 
-button {}
+button {
+  border: none;
+  background: none;
+  cursor: pointer;
+}
 
 ul {
   list-style: none;

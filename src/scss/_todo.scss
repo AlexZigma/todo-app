@@ -2,7 +2,7 @@
 
 .todo {
 
-  &:not(:has(.todo-item__checkbox:not(:checked))) .todo__complete-all {
+  &:not(:has(.todo-item__checkbox:not(:checked))) .todo__complete-all::before {
     opacity: 1;
   }
 
@@ -18,50 +18,69 @@
   }
 
   &__new-input {
-    background: none;
+    flex: 1;
+
     height: 100%;
     padding: 20px 10px;
-    flex: 1;
+
+    background: none;
   }
 
   &__complete-all {
-    height: 100%;
-    appearance: none;
     display: flex;
     align-items: center;
     justify-content: center;
-    padding: 5px;
-    width: 45px;
-    opacity: 0.5;
 
-    &:hover {
+    height: 100%;
+    width: 45px;
+    padding: 5px;
+
+    appearance: none;
+
+    &:hover::before {
       opacity: 1;
+    }
+
+    &:focus-visible {
+      box-shadow: 0px 0px 2px 2px var(--orange-200);
+      border-radius: 10px;
     }
 
     &::before {
       content: '';
-      inset: 0;
+
+      width: 100%;
+      aspect-ratio: 1;
+
+      opacity: 0.5;
+
       background-image: url(/public/icons/ic-dropdown.svg);
       background-position: center;
       background-repeat: no-repeat;
-      width: 100%;
-      aspect-ratio: 1;
       background-size: contain;
     }
   }
 
   &__actions {
-    padding: 10px 15px;
+    position: relative;
+
+    height: 50px;
+    padding-inline: 10px;
+
+    @include mobile {
+      align-items: flex-start;
+      height: 90px;
+      padding: 10px;
+    }
+  }
+
+  &__actions-row {
     display: flex;
     justify-content: space-between;
     align-items: center;
-    flex-wrap: wrap;
-    position: relative;
-    gap: 5px;
 
-    @include mobile {
-      // min-height: 100px;
-    }
+    height: 35px;
+    width: 100%;
   }
 
   &__list {
@@ -72,22 +91,21 @@
 
   &__count {
     position: relative;
-
-    @include mobile {
-      align-self: flex-start;
-    }
   }
 
   &__clear-button {
     position: relative;
-    cursor: pointer;
-    border-radius: 10px;
-    padding: 5px 10px;
+
     display: flex;
     justify-content: center;
     align-items: center;
-    background-color: var(--green-100);
+
+    padding: 5px 10px;
+    border-radius: 10px;
     border: none;
+
+    cursor: pointer;
+    background-color: var(--green-100);
     color: var(--green-400);
 
     &:hover {

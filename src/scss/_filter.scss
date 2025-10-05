@@ -1,26 +1,25 @@
 @use 'mixins' as *;
 
 .filter {
+  position: absolute;
+  left: 0;
+
   display: flex;
   justify-content: center;
   align-items: center;
   flex-wrap: wrap;
   gap: 20px;
-  position: absolute;
-  inset: 0;
-  
+
+  width: 100%;
+
   @include mobile {
-    align-self: flex-end;
-    position: relative;
-    flex-basis: 100%;
-    order: 3;
+    bottom: 10px;
   }
 
   &__button {
-    border: none;
-    background: none;
     position: relative;
-    cursor: pointer;
+
+    transition: color 300ms;
 
     &::after {
       content: '';
@@ -28,14 +27,22 @@
       bottom: 0;
       left: 50%;
       translate: -50%;
-      background-color: var(--black);
+
       width: 0;
       height: 3px;
-      transition-duration: inherit;
+
+      background-color: var(--black);
+
+      transition: width 300ms, background-color 300ms;
     }
 
     &:hover::after {
       width: 100%;
+    }
+
+    &:focus-visible {
+      box-shadow: 0px 0px 2px 2px var(--orange-200);
+      border-radius: 5px;
     }
 
     &--selected {

@@ -1,24 +1,35 @@
+@use 'mixins' as *;
+
 .todo-item {
 
+  &:has(.todo-item__checkbox:focus-visible) {
+    box-shadow: 0px 0px 2px 2px var(--orange-200);
+    border-radius: 10px;
+  }
+
   &__checkbox {
-    appearance: none;
     display: flex;
     align-items: center;
     justify-content: center;
+
     margin: 5px;
     width: 35px;
     aspect-ratio: 1;
+
+    appearance: none;
     border: 2px solid var(--black);
     border-radius: 50%;
 
     &:after {
       content: '';
       inset: 0;
+
+      width: 50%;
+      aspect-ratio: 1;
+
       background-image: url(/public/icons/check-mark.svg);
       background-position: center;
       background-repeat: no-repeat;
-      width: 50%;
-      aspect-ratio: 1;
       background-size: contain;
       opacity: 0;
     }
@@ -52,26 +63,33 @@
   }
 
   &__delete-button {
-    border: none;
-    background: none;
     display: flex;
     align-items: center;
     justify-content: center;
+
     padding: 5px;
     width: 50px;
     aspect-ratio: 1;
+
+    border: none;
+    background: none;
     opacity: 0;
     visibility: hidden;
     pointer-events: visible;
 
+    @include mobile {
+
+    }
+
     &::after {
       content: '';
-      inset: 0;
+
+      width: 100%;
+      aspect-ratio: 1;
+
       background-image: url(/public/icons/close.svg);
       background-position: center;
       background-repeat: no-repeat;
-      width: 100%;
-      aspect-ratio: 1;
       background-size: contain;
       transition-duration: inherit;
     }
@@ -82,13 +100,14 @@
   }
 
   &__input {
-    box-shadow: 0px 5px 10px 2px var(--orange-100);
-    border: 2px solid var(--orange-200);
-    border-radius: 10px;
-    margin-left: 45px;
     flex: 1;
-    height: 100%;
-    padding: 20px 10px;
+
+    margin-left: 43px;
+    padding: 19px 10px;
+    
+    box-shadow: 0px 5px 10px 2px var(--orange-100);
+    border: 1px solid var(--orange-200);
+    border-radius: 10px;
   }
 
   &--editing {
@@ -119,5 +138,10 @@
       color: var(--gray-300);
       transition-duration: 300ms;
     }
+  }
+
+  &:has(.todo-item__checkbox:focus-visible) {
+    box-shadow: 0px 0px 2px 2px var(--orange-200);
+    border-radius: 10px;
   }
 }

@@ -20,56 +20,13 @@
   --main-gap: 135px;
 }
 
-@font-face {
-  font-family: "Roboto";
-  font-style: normal;
-  font-weight: 400;
-  src: url("/src/fonts/Roboto-Regular.woff2") format("woff2"),
-}
-
-@font-face {
-  font-family: "Roboto";
-  font-style: normal;
-  font-weight: 500;
-  src: url("/src/fonts/Roboto-Medium.woff2") format("woff2"),
-}
-
-@font-face {
-  font-family: "Roboto";
-  font-style: normal;
-  font-weight: 700;
-  src: url("/src/fonts/Roboto-Bold.woff2") format("woff2"),
-}
-
-h1 {
-  font-family: 'Roboto', sans-serif;
-  font-style: normal;
-  font-weight: 700;
-  font-size: 96px;
-  // font-size: fluid-value(34, 96, 360, 1024);
-  line-height: 105px;
-  // line-height: fluid-value(38, 105, 360, 1024);
-  letter-spacing: 0.02em;
-  color: var(--orange-200);
-}
-
 html {
   scroll-behavior: smooth;
-}
-
-body {
-  font-family: 'Roboto', sans-serif;
-  font-style: normal;
-  font-weight: 400;
-  font-size: 20px;
-  // font-size: fluid-value(16, 20, 360, 1024);
-  line-height: 28px;
 }
 
 button,
 input,
 input::after {
-  transition-duration: 300ms;
   cursor: pointer;
 }
 
@@ -81,38 +38,21 @@ span {
   word-break: break-all;
 }
 
-.container {
-  max-width: 800px;
-  margin-inline: auto;
-  margin-block: 50px;
-  padding-inline: 50px;
-  backdrop-filter: blur(10px);
-  background-color: rgba(255, 255, 255, 0.3);
-
-  @include mobile {
-    padding-inline: 10px;
-  }
+header {
+  text-align: center;
 }
 
-.background {
-  position: fixed;
-  inset: 0;
-  z-index: -100;
-  height: 100%;
-  width: 100%;
-  object-fit: cover;
+.container {
+  max-width: 800px;
+  
+  margin-inline: auto;
+  margin-block: 50px;
+  padding-inline: 10px;
+
+  backdrop-filter: blur(10px);
+  background-color: rgba(255, 255, 255, 0.3);
 }
 
 .hidden {
-  opacity: 0;
-  pointer-events: none;
-}
-
-.fade-out {
-  opacity: 0;
-  height: 0 !important;
-  padding: 0 15px;
-  margin: 0;
-  overflow: hidden;
-  transition-duration: 300ms;
+  display: none !important;
 }
