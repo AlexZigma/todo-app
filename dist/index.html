@@ -1,13 +1,15 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="ru">
 
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Document</title>
+  <meta name="description" content="Приложение для ведения списка задач">
+  <meta name="keywords" content="todo, задачи, списки">
+  <title>Todo App</title>
   <link rel="shortcut icon" href="icons/logo.svg" type="image/x-icon">
-  <script type="module" crossorigin src="./assets/index-CM6UM_kS.js"></script>
-  <link rel="stylesheet" crossorigin href="./assets/index-BWk35sR_.css">
+  <script type="module" crossorigin src="./assets/index-Bu-aRZmL.js"></script>
+  <link rel="stylesheet" crossorigin href="./assets/index-txlppuv4.css">
 </head>
 
 <body>
@@ -17,57 +19,59 @@
   </header>
 
   <main>
-    <section class="container todo">
+    <div class="container todo">
 
-      <form class="card todo__form" id="todo-form" action="">
-        <input class="todo__complete-all" id="completeAllButton" type="checkbox"></input>
+      <form class="card todo__form" id="todo-form">
+        <input class="todo__complete-all" id="completeAllButton" type="checkbox" tabindex="0">
         <input class="todo__new-input" id="todo-new" type="text" placeholder="I need to do...">
       </form>
 
-      <div class="card todo__actions">
+      <div class="card todo__actions p-small">
         <ul class="filter">
           <li class="filter__item">
-            <button class="filter__button filter__button--selected" data-filter="all">
+            <button class="filter__button filter__button--selected" type="button" data-filter="all">
               All
             </button>
           </li>
           <li class="filter__item">
-            <button class="filter__button" data-filter="active">
+            <button class="filter__button" type="button" data-filter="active">
               Active
             </button>
           </li>
           <li class="filter__item">
-            <button class="filter__button" data-filter="completed">
+            <button class="filter__button" type="button" data-filter="completed">
               Completed
             </button>
           </li>
         </ul>
 
-        <span class="todo__count" id="todo-count">0</span>
+        <div class="todo__actions-row">
+          <span class="todo__count" id="todo-count">0</span>
 
-        <button class="todo__clear-button ">Clear completed</button>
+          <button class="todo__clear-button" type="button">Clear completed</button>
+        </div>
 
       </div>
 
       <ul class="todo__list" id="todo-list">
-        <li class="todo__item todo-item card">
-          <input class="todo-item__checkbox" type="checkbox" checked>
-          <span class="todo-item__text">task 1</span>
-          <button class="todo-item__button-remove" type="button"></button>
-        </li>
-
-        <li class="todo__item todo-item card todo-item--editing">
-          <input class="todo-item__checkbox" type="checkbox">
-          <span class="todo-item__text">task 1</span>
-          <button class="todo-item__button-remove" type="button"></button>
-          <input class="todo-item__input">
-        </li>
       </ul>
 
-    </section>
+    </div>
   </main>
 
-  <footer>
+  <footer class="container">
+    <ul class="shortcut-list">
+      <li>
+        <span class="shortcut">Двойной клик</span>
+        для редактирования
+      </li>
+      <li>
+        <span class="shortcut">esc</span> для отмены редактирования
+      </li>
+      <li>
+        <span class="shortcut">enter</span> для сохранения изменений/новой задачи
+      </li>
+    </ul>
   </footer>
 </body>
 
