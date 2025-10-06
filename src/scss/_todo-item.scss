@@ -102,8 +102,11 @@
   &__input {
     flex: 1;
 
-    margin-left: 43px;
-    padding: 19px 10px;
+    margin-left: 40px;
+    margin-block: -10px;
+    margin-right: -10px;
+    padding-inline: 10px;
+    height: 60px;
 
     box-shadow: 0px 5px 10px 2px var(--orange-100);
     border: 1px solid var(--orange-200);
