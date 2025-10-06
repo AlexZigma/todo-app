@@ -67,6 +67,9 @@
   &__actions {
     position: relative;
 
+    display: flex;
+    align-items: center;
+
     height: 50px;
     padding-inline: 10px;
 
