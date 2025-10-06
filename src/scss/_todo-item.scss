@@ -1,6 +1,11 @@
 @use 'mixins' as *;
 
 .todo-item {
+  display: flex;
+  align-items: flex-start;
+  gap: 10px;
+
+  padding: 10px;
 
   &:has(.todo-item__checkbox:focus-visible) {
     box-shadow: 0px 0px 2px 2px var(--orange-200);
@@ -12,8 +17,7 @@
     align-items: center;
     justify-content: center;
 
-    margin: 5px;
-    width: 35px;
+    width: 40px;
     aspect-ratio: 1;
 
     appearance: none;
@@ -58,8 +62,7 @@
 
   &__text {
     flex: 1;
-    padding-left: 10px;
-    padding-block: 20px;
+    align-self: center;
   }
 
   &__delete-button {
@@ -67,8 +70,7 @@
     align-items: center;
     justify-content: center;
 
-    padding: 5px;
-    width: 50px;
+    width: 40px;
     aspect-ratio: 1;
 
     border: none;
@@ -77,9 +79,7 @@
     visibility: hidden;
     pointer-events: visible;
 
-    @include mobile {
-
-    }
+    @include mobile {}
 
     &::after {
       content: '';
@@ -104,7 +104,7 @@
 
     margin-left: 43px;
     padding: 19px 10px;
-    
+
     box-shadow: 0px 5px 10px 2px var(--orange-100);
     border: 1px solid var(--orange-200);
     border-radius: 10px;
