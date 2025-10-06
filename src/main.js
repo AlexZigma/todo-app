@@ -20,6 +20,7 @@ class Todo {
     this.todoForm = document.getElementById('todo-form')
     this.todoListElement = document.getElementById('todo-list')
     this.todoCountElement = document.getElementById('todo-count')
+    this.todoActionsElement = document.querySelector('.todo__actions')
     this.clearCompletedButton = document.querySelector('.todo__clear-button')
     this.filterListElement = document.querySelector('.filter')
     this.completeAllButton = document.getElementById('completeAllButton')
@@ -34,6 +35,7 @@ class Todo {
   render(force = true) {
     this.updateCount()
     this.updateClearButton()
+    this.updateActions()
 
     if (!force) return
 
@@ -149,6 +151,12 @@ class Todo {
   updateCount() {
     const count = this.todoList.filter(task => !task.isCompleted).length
     this.todoCountElement.textContent = `${count} ${count === 1 ? 'item' : 'items'} left`
+  }
+
+  updateActions() {
+    const count = this.todoList.length
+    this.todoActionsElement.classList.toggle('hidden', count === 0)
+    this.completeAllButton.classList.toggle('hidden', count === 0)
   }
 
   onNewTaskSubmit = (event) => {
