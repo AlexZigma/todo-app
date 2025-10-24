@@ -209,7 +209,7 @@ class Todo {
     const id = li.dataset.id
     const task = this.getTask(id)
 
-    const input = this.startEditingTask(li, task)
+    this.startEditingTask(li, task)
   }
 
   startEditingTask(li, task) {
@@ -258,14 +258,13 @@ class Todo {
     if (!filterButton) return
 
     const filterButtons = event.currentTarget.querySelectorAll('.filter__button');
-    for (let button of filterButtons) {
+    filterButtons.forEach(button => {
       button.classList.remove('filter__button--selected');
-    }
+    })
     filterButton.classList.add('filter__button--selected');
 
     const filter = filterButton.dataset.filter
     this.setFilter(filter)
-
   }
 
   bindEvents() {
