@@ -73,7 +73,12 @@ class Todo {
   loadTodo() {
     const rawData = localStorage.getItem(this.storageKey)
     if (rawData) {
-      return JSON.parse(rawData).map(item => new Task(item.text, item.isCompleted, item.id))
+      try {
+        return JSON.parse(rawData).map(item => new Task(item.text, item.isCompleted, item.id))
+      } catch (error){
+        console.error("error while load from storage", error);
+        return []
+      }
     }
     return []
   }
