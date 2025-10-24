@@ -166,15 +166,14 @@ class Todo {
 
   onNewTaskSubmit = (event) => {
     event.preventDefault()
-    const inputValue = this.newTaskInput.value
-
-    if (inputValue.trim().length > 0) {
-      this.addTask(inputValue)
-      this.newTaskInput.value = ''
-    }
+    this.handleNewTask()
   }
 
   onNewTaskBlur = () => {
+    this.handleNewTask()
+  }
+  
+  handleNewTask() {
     const inputValue = this.newTaskInput.value
 
     if (inputValue.trim().length > 0) {
