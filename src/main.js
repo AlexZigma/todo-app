@@ -71,7 +71,7 @@ class Todo {
   }
 
   loadTodo() {
-    const rawData = sessionStorage.getItem(this.storageKey)
+    const rawData = localStorage.getItem(this.storageKey)
     if (rawData) {
       return JSON.parse(rawData).map(item => new Task(item.text, item.isCompleted, item.id))
     }
@@ -79,7 +79,7 @@ class Todo {
   }
 
   saveTodo() {
-    sessionStorage.setItem(this.storageKey, JSON.stringify(this.todoList))
+    localStorage.setItem(this.storageKey, JSON.stringify(this.todoList))
   }
 
   update(force = true) {
